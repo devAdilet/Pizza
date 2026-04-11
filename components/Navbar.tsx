@@ -2,6 +2,7 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
+import Link from 'next/link';
 
 export function Navbar() {
   const { cartCount, setIsCartOpen } = useCart();
@@ -11,9 +12,9 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0 flex items-center cursor-pointer">
-            <a href="/" className="text-2xl font-extrabold tracking-tight text-black">
+            <Link href="/" className="text-2xl font-extrabold tracking-tight text-black">
               PIZZA<span className="text-red-600">.</span>CO
-            </a>
+            </Link>
           </div>
           <div className="flex items-center">
             <button
