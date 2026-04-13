@@ -28,6 +28,10 @@ export interface Pizza {
   isCustomizable?: boolean;
   availableSizes?: SizeOption[];
   availableCrusts?: CrustOption[];
+
+  kcal?: number;
+  rating?: number;
+  prepTime?: string;
 }
 
 export interface CartItem extends Pizza {

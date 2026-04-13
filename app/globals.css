@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Using strict B&W */
+  /* Soft Premium "Tasty" App Theme */
   --color-primary-black: #000000;
   --color-primary-white: #ffffff;
+  --color-accent-orange: #FF5722;
+  --color-bg-light: #F5F5F5;
+  --color-text-gray: #424242;
 }
 
 body {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #F5F5F5;
+  color: #424242;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
