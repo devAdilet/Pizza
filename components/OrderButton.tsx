@@ -9,9 +9,9 @@ interface OrderButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 export function OrderButton({ children, ...props }: OrderButtonProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.95 }}
-      className="w-full py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl shadow-[0_4px_14px_0_rgba(255,0,0,0.39)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.98 }}
+      className="w-full py-3 px-4 bg-black text-white font-bold rounded-none border border-black hover:bg-[#1a1a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       {...props as any}
     >
       {children}

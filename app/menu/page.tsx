@@ -1,65 +1,98 @@
 "use client";
-import React, { useState } from 'react';
-import menuData from '@/data/menu.json';
+import React, { useState, useEffect } from 'react';
+import menuDataRaw from '@/data/menu.json';
 import { Pizza } from '@/types';
 import { PizzaCard } from '@/components/PizzaCard';
-import { motion } from 'framer-motion';
 
-const CATEGORIES = ['All', 'Appetizers', 'Classic Pizza', 'Signature Pizza', 'Desserts', 'Drinks'];
+const CATEGORIES = [
+  'Appetizers', 'Salads', 'Low Carb', 'Pastas', 'Calzones', 'Hot Subs', 'Flat Breads', 
+  'Create Your Own Pizza', 'Classic Pizzas', 'Signature Pizzas', 'Specialty Pizzas', 
+  'Desserts', 'Beverages'
+];
+
+const menuData = menuDataRaw as Pizza[];
 
 export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState(CATEGORIES[0]);
 
-  const filteredMenu: Pizza[] = menuData.filter((pizza) => {
-    if (activeCategory === 'All') return true;
-    return pizza.category === activeCategory;
-  });
+  const scrollToCategory = (category: string) => {
+    setActiveCategory(category);
+    const element = document.getElementById(`section-${category}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      let currentActive = activeCategory;
+      for (const cat of CATEGORIES) {
+        const el = document.getElementById(`section-${cat}`);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // Adjust threshold based on layout
+          if (rect.top >= 0 && rect.top < 300) {
+            currentActive = cat;
+            break;
+          }
+        }
+      }
+      if (currentActive !== activeCategory) {
+        setActiveCategory(currentActive);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeCategory]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12"
-      >
-        <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight mb-4">
-          Our Menu
-        </h1>
-        <p className="text-lg text-black/60 max-w-2xl mx-auto font-medium">
-          Fresh ingredients, hot out of the oven.
-        </p>
-      </motion.div>
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row gap-12">
+      {/* Sidebar Navigation */}
+      <aside className="w-full md:w-72 flex-shrink-0 relative">
+        <nav className="md:sticky md:top-24 flex flex-col bg-white border border-black p-4 space-y-1">
+          <h2 className="text-xs font-black tracking-widest text-black/50 uppercase mb-4 px-3">Categories</h2>
+          {CATEGORIES.map((category) => {
+            const isActive = activeCategory === category;
+            const isCyo = category === 'Create Your Own Pizza';
+            return (
+              <button
+                key={category}
+                onClick={() => scrollToCategory(category)}
+                className={`text-left px-4 py-3 text-sm font-bold transition-all border ${
+                  isActive 
+                    ? 'bg-black text-white border-black delay-0' 
+                    : isCyo 
+                      ? 'bg-white hover:bg-black hover:text-white border-black/20 hover:border-black' 
+                      : 'bg-white hover:bg-black/5 border-transparent text-black'
+                }`}
+              >
+                {category}
+              </button>
+            );
+          })}
+        </nav>
+      </aside>
 
-      {/* Categories Bar */}
-      <div className="sticky top-16 z-30 bg-white/80 backdrop-blur-xl py-4 mb-10 border-b border-black/5 -mx-4 px-4 sm:mx-0 sm:px-0">
-        <div className="flex overflow-x-auto gap-3 pb-2 sm:pb-0 sm:flex-wrap sm:justify-center" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {CATEGORIES.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`whitespace-nowrap px-6 py-2.5 rounded-full font-bold transition-all duration-300 ${
-                activeCategory === category
-                  ? 'bg-black text-white shadow-md scale-105'
-                  : 'bg-black/5 text-black hover:bg-black/10'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Menu Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {filteredMenu.map((pizza, index) => (
-          <PizzaCard key={pizza.id} pizza={pizza} index={index} />
-        ))}
-        {filteredMenu.length === 0 && (
-          <div className="col-span-full py-20 text-center text-black/50 font-medium text-lg">
-            No items found in this category yet.
-          </div>
-        )}
-      </div>
+      {/* Main Content Area */}
+      <main className="flex-1 pb-32">
+        {CATEGORIES.map((category) => {
+          const items = menuData.filter(item => item.category === category);
+          if (items.length === 0) return null; // We can return null to completely hide empty sections.
+          
+          return (
+            <div key={category} id={`section-${category}`} className="mb-20 scroll-mt-24">
+              <h2 className="text-4xl font-black text-black mb-10 pb-4 border-b-2 border-black tracking-tight">
+                {category}
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {items.map((item, index) => (
+                  <PizzaCard key={item.id} pizza={item} index={index} />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </main>
     </div>
   );
 }

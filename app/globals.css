@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-red: #FF0000;
+  /* Using strict B&W */
+  --color-primary-black: #000000;
+  --color-primary-white: #ffffff;
 }
 
 body {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #000000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,8 +22,16 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background: #000000; 
-  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #333333; 
+}
+
+/* Hide scrollbar for category tabs */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

@@ -1,66 +1,79 @@
 [
   {
-    "id": "1",
-    "name": "Garlic Parmesan Knots",
-    "description": "Freshly baked dough knots tossed in garlic butter and parmesan.",
-    "price": 5.99,
+    "id": "app-1",
+    "name": "Classic Bruschetta",
+    "description": "Toasted bread with tomatoes, garlic, and fresh basil.",
+    "basePrice": 8.00,
     "category": "Appetizers",
-    "imageUrl": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&q=80&w=800"
+    "imageUrl": "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=800&q=80"
   },
   {
-    "id": "2",
-    "name": "Mozzarella Sticks",
-    "description": "Crispy golden outside, gooey cheese inside. Served with marinara.",
-    "price": 6.99,
-    "category": "Appetizers",
-    "imageUrl": "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?auto=format&fit=crop&q=80&w=800"
+    "id": "sal-1",
+    "name": "Caesar Salad",
+    "description": "Crisp romaine, parmesan cheese, house croutons.",
+    "basePrice": 10.00,
+    "category": "Salads",
+    "imageUrl": "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=800&q=80"
   },
   {
-    "id": "3",
-    "name": "Classic Margherita",
-    "description": "Tomato sauce, mozzarella, and fresh basil.",
-    "price": 12.00,
-    "category": "Classic Pizza",
-    "imageUrl": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=80&w=800"
+    "id": "low-1",
+    "name": "Keto Pizza Bowl",
+    "description": "All your favorite pizza toppings baked in a bowl without the crust.",
+    "basePrice": 12.00,
+    "category": "Low Carb",
+    "imageUrl": "https://images.unsplash.com/photo-1544982503-9f984c14501a?w=800&q=80"
   },
   {
-    "id": "4",
-    "name": "Meat Lover's Feast",
-    "description": "Sausage, bacon, pepperoni, and ham.",
-    "price": 18.00,
-    "category": "Classic Pizza",
-    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800"
+    "id": "cyo-1",
+    "name": "Create Your Own Pizza",
+    "description": "Start with our classic cheese and add your favorite toppings.",
+    "basePrice": 10.00,
+    "category": "Create Your Own Pizza",
+    "imageUrl": "https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=800&q=80",
+    "isCustomizable": true,
+    "availableSizes": [
+      { "label": "Small 10\"", "priceModifier": 0 },
+      { "label": "Medium 12\"", "priceModifier": 3.00 },
+      { "label": "Large 14\"", "priceModifier": 5.00 },
+      { "label": "X-Large 16\"", "priceModifier": 7.00 }
+    ],
+    "availableCrusts": [
+      { "label": "Regular", "priceModifier": 0 },
+      { "label": "Thin", "priceModifier": 0 },
+      { "label": "Stuffed", "priceModifier": 2.00 },
+      { "label": "Gluten-Free", "priceModifier": 3.00 }
+    ]
   },
   {
-    "id": "5",
-    "name": "Pepperoni Inferno",
-    "description": "Spicy pepperoni, jalapeños, and hot honey drizzle.",
-    "price": 15.00,
-    "category": "Signature Pizza",
-    "imageUrl": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&q=80&w=800"
+    "id": "clas-1",
+    "name": "Classic Cheese",
+    "description": "Simple, elegant, perfect.",
+    "basePrice": 12.00,
+    "category": "Classic Pizzas",
+    "imageUrl": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80"
   },
   {
-    "id": "6",
-    "name": "Truffle Mushroom",
-    "description": "Wild mushrooms, truffle oil, and ricotta cheese.",
-    "price": 19.50,
-    "category": "Signature Pizza",
-    "imageUrl": "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?auto=format&fit=crop&q=80&w=800"
+    "id": "sig-1",
+    "name": "The Works",
+    "description": "Pepperoni, sausage, green peppers, onions, and mushrooms.",
+    "basePrice": 18.00,
+    "category": "Signature Pizzas",
+    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80"
   },
   {
-    "id": "7",
+    "id": "des-1",
     "name": "Tiramisu",
-    "description": "Classic Italian dessert with espresso and mascarpone.",
-    "price": 6.99,
+    "description": "Espresso and mascarpone delight.",
+    "basePrice": 6.00,
     "category": "Desserts",
-    "imageUrl": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=800"
+    "imageUrl": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80"
   },
   {
-    "id": "8",
-    "name": "Craft Cola",
-    "description": "Artisan cola with natural cane sugar.",
-    "price": 2.99,
-    "category": "Drinks",
-    "imageUrl": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=800"
+    "id": "bev-1",
+    "name": "Artisan Cola",
+    "description": "Craft soda made with real cane sugar.",
+    "basePrice": 3.00,
+    "category": "Beverages",
+    "imageUrl": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&q=80"
   }
 ]

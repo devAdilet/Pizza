@@ -12,19 +12,19 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0 flex items-center cursor-pointer">
-            <Link href="/" className="text-2xl font-extrabold tracking-tight text-black">
-              PIZZA<span className="text-red-600">.</span>CO
+            <Link href="/" className="text-2xl font-black tracking-tight text-black">
+              PIZZA<span className="text-black">.</span>CO
             </Link>
           </div>
           <div className="flex items-center">
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2 text-black hover:text-red-600 transition-colors"
+              className="relative p-2 text-black hover:text-black/70 transition-colors"
               aria-label="Open cart"
             >
               <ShoppingCart className="w-6 h-6" />
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-600 rounded-full">
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-black rounded-full">
                   {cartCount}
                 </span>
               )}

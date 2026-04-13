@@ -55,24 +55,29 @@ export function CartSidebar() {
                 </div>
               ) : (
                 cart.map((item) => (
-                  <div key={item.id} className="flex gap-4">
-                    <img src={item.imageUrl} alt={item.name} className="w-20 h-20 rounded-[1rem] object-cover" />
+                  <div key={item.cartItemId} className="flex gap-4">
+                    <img src={item.imageUrl} alt={item.name} className="w-20 h-20 rounded-none object-cover border border-black/10" />
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <h4 className="font-bold text-black">{item.name}</h4>
-                        <p className="text-black/70 font-semibold">${item.price.toFixed(2)}</p>
+                        <h4 className="font-bold text-black leading-tight">{item.name}</h4>
+                        <div className="text-[10px] uppercase tracking-wider text-black/50 my-1 font-bold">
+                          {item.selectedSize?.label || 'Standard'} 
+                          {item.selectedCrust ? ` • ${item.selectedCrust.label}` : ''}
+                          {item.selectedToppings?.length ? ` • ${item.selectedToppings.length} Extras` : ''}
+                        </div>
+                        <p className="text-black font-black">${item.finalPrice.toFixed(2)}</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-8 h-8 flex items-center justify-center border border-black/10 rounded-full hover:bg-black/5 transition-colors text-black"
+                          onClick={() => updateQuantity(item.cartItemId, item.quantity - 1)}
+                          className="w-7 h-7 flex items-center justify-center border border-black/20 hover:border-black transition-colors text-black"
                         >
                           <Minus className="w-4 h-4" />
                         </button>
-                        <span className="font-semibold w-4 text-center text-black">{item.quantity}</span>
+                        <span className="font-black w-4 text-center text-black text-sm">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-8 h-8 flex items-center justify-center border border-black/10 rounded-full hover:bg-black/5 transition-colors text-black"
+                          onClick={() => updateQuantity(item.cartItemId, item.quantity + 1)}
+                          className="w-7 h-7 flex items-center justify-center border border-black/20 hover:border-black transition-colors text-black"
                         >
                           <Plus className="w-4 h-4" />
                         </button>

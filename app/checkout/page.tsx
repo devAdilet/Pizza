@@ -112,11 +112,19 @@ export default function CheckoutPage() {
             {/* Order Summary */}
             <div className="bg-black/5 p-8 rounded-3xl h-fit">
               <h3 className="text-2xl font-bold mb-6 text-black">Order Summary</h3>
-              <div className="space-y-4 mb-8">
+              <div className="space-y-6 mb-8">
                 {cart.map((item) => (
-                  <div key={item.id} className="flex justify-between font-medium">
-                    <span className="text-black/80">{item.quantity}x {item.name}</span>
-                    <span className="text-black">${(item.price * item.quantity).toFixed(2)}</span>
+                  <div key={item.cartItemId} className="flex flex-col font-medium border-b border-black/5 pb-4 last:border-0 last:pb-0">
+                    <div className="flex justify-between items-start">
+                      <span className="text-black font-bold">{item.quantity}x {item.name}</span>
+                      <span className="text-black font-black">${(item.finalPrice * item.quantity).toFixed(2)}</span>
+                    </div>
+                    {item.selectedSize && (
+                      <div className="text-xs text-black/50 mt-1 uppercase tracking-widest">
+                        {item.selectedSize.label} 
+                        {item.selectedCrust ? ` • ${item.selectedCrust.label}` : ''}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
