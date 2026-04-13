@@ -3,6 +3,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { CartItem, AddToCartPayload } from '@/types';
 
+export type OrderType = 'Delivery' | 'Takeout';
+
 export interface CartContextType {
   cart: CartItem[];
   addToCart: (payload: AddToCartPayload) => void;
@@ -13,13 +15,15 @@ export interface CartContextType {
   cartCount: number;
   isCartOpen: boolean;
   setIsCartOpen: (isOpen: boolean) => void;
+  orderType: OrderType;
+  setOrderType: (type: OrderType) => void;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // Extremely simple hashing function for UI consistency
 const generateCartItemId = (payload: AddToCartPayload): string => {
-  const { pizza, selectedSize, selectedCrust, selectedToppings } = payload;
+  const { pizza, selectedSize, selectedCrust, selectedToppings, specialInstructions } = payload;
   let hashParts = [pizza.id];
   if (selectedSize) hashParts.push(`sz-${selectedSize.label}`);
   if (selectedCrust) hashParts.push(`cr-${selectedCrust.label}`);
@@ -31,16 +35,22 @@ const generateCartItemId = (payload: AddToCartPayload): string => {
       .join('|');
     if (toppingsStr) hashParts.push(`top-${toppingsStr}`);
   }
+  if (specialInstructions && specialInstructions.trim() !== '') {
+    // encode to keep it safe for a key string
+    hashParts.push(`instr-${Buffer.from(specialInstructions).toString('base64').substring(0, 10)}`);
+  }
   return hashParts.join('::');
 };
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [orderType, setOrderType] = useState<OrderType>('Delivery');
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('pizza_cart_v3');
+    const savedOrderType = localStorage.getItem('pizza_ordertype');
     if (savedCart) {
       try {
         setCart(JSON.parse(savedCart));
@@ -48,14 +58,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         console.error("Failed to parse cart JSON", e);
       }
     }
+    if (savedOrderType) setOrderType(savedOrderType as OrderType);
+    
     setIsInitialized(true);
   }, []);
 
   useEffect(() => {
     if (isInitialized) {
       localStorage.setItem('pizza_cart_v3', JSON.stringify(cart));
+      localStorage.setItem('pizza_ordertype', orderType);
     }
-  }, [cart, isInitialized]);
+  }, [cart, orderType, isInitialized]);
 
   const addToCart = (payload: AddToCartPayload) => {
     const cartItemId = generateCartItemId(payload);
@@ -79,6 +92,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           selectedSize: payload.selectedSize,
           selectedCrust: payload.selectedCrust,
           selectedToppings: payload.selectedToppings,
+          specialInstructions: payload.specialInstructions,
         },
       ];
     });
@@ -116,6 +130,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         cartCount,
         isCartOpen,
         setIsCartOpen,
+        orderType,
+        setOrderType,
       }}
     >
       {children}

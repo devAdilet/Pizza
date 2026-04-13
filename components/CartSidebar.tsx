@@ -65,7 +65,7 @@ export function CartSidebar() {
                           {item.selectedCrust ? ` • ${item.selectedCrust.label}` : ''}
                           {item.selectedToppings?.length ? ` • ${item.selectedToppings.length} Extras` : ''}
                         </div>
-                        <p className="text-black font-black">${item.finalPrice.toFixed(2)}</p>
+                        <p className="text-black font-mono font-black mt-2">${item.finalPrice.toFixed(2)}</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <button
@@ -90,9 +90,9 @@ export function CartSidebar() {
 
             {cart.length > 0 && (
               <div className="p-6 border-t border-black/5 bg-black/5">
-                <div className="flex justify-between mb-4 text-lg font-bold text-black">
-                  <span>Subtotal</span>
-                  <span>${cartTotal.toFixed(2)}</span>
+                <div className="flex justify-between items-center mb-4 text-xl font-black text-black">
+                  <span className="uppercase tracking-widest text-sm text-black/50">Subtotal</span>
+                  <span className="font-mono">${cartTotal.toFixed(2)}</span>
                 </div>
                 <OrderButton onClick={handleCheckout}>Go to Checkout</OrderButton>
               </div>

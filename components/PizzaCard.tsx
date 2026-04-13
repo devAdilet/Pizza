@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { Pizza } from '@/types';
 import { OrderButton } from './OrderButton';
 import { useCart } from '@/hooks/useCart';
-import { CYOModal } from './CYOModal';
+import { CustomizationModal } from './CustomizationModal';
+import { isCustomizable } from '@/utils/CategoryGuard';
 
 interface PizzaCardProps {
   pizza: Pizza;
@@ -14,9 +15,10 @@ interface PizzaCardProps {
 export function PizzaCard({ pizza, index }: PizzaCardProps) {
   const { addToCart } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const customizable = isCustomizable(pizza.category);
 
   const handleAction = () => {
-    if (pizza.isCustomizable) {
+    if (customizable) {
       setIsModalOpen(true);
     } else {
       addToCart({ pizza });
@@ -42,17 +44,17 @@ export function PizzaCard({ pizza, index }: PizzaCardProps) {
         <div className="p-6 flex flex-col flex-grow">
           <div className="flex justify-between items-start mb-2 gap-4">
             <h3 className="text-xl font-black text-black leading-tight">{pizza.name}</h3>
-            <span className="text-lg font-bold text-black border px-2 py-1">${pizza.basePrice.toFixed(2)}</span>
+            <span className="text-lg font-mono font-bold text-black border border-black/20 px-2 py-1">${pizza.basePrice.toFixed(2)}</span>
           </div>
           <p className="text-black/60 text-sm mb-6 flex-grow font-medium leading-relaxed">{pizza.description}</p>
           <OrderButton onClick={handleAction}>
-            {pizza.isCustomizable ? 'Customize' : 'Add to Order'}
+            {customizable ? 'Customize' : 'Add to Order'}
           </OrderButton>
         </div>
       </motion.div>
 
-      {pizza.isCustomizable && (
-        <CYOModal 
+      {customizable && (
+        <CustomizationModal 
           pizza={pizza} 
           isOpen={isModalOpen} 
           onClose={() => setIsModalOpen(false)} 

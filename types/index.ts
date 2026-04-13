@@ -38,6 +38,7 @@ export interface CartItem extends Pizza {
   selectedSize?: SizeOption;
   selectedCrust?: CrustOption;
   selectedToppings?: ToppingSelection[];
+  specialInstructions?: string;
 }
 
 export interface AddToCartPayload {
@@ -46,5 +47,6 @@ export interface AddToCartPayload {
   selectedSize?: SizeOption;
   selectedCrust?: CrustOption;
   selectedToppings?: ToppingSelection[];
+  specialInstructions?: string;
   finalPrice?: number;
 }
