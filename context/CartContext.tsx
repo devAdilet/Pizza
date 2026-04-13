@@ -17,6 +17,8 @@ export interface CartContextType {
   setIsCartOpen: (isOpen: boolean) => void;
   orderType: OrderType;
   setOrderType: (type: OrderType) => void;
+  isUpsellOpen: boolean;
+  setIsUpsellOpen: (isOpen: boolean) => void;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -45,6 +47,7 @@ const generateCartItemId = (payload: AddToCartPayload): string => {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isUpsellOpen, setIsUpsellOpen] = useState(false);
   const [orderType, setOrderType] = useState<OrderType>('Delivery');
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -96,7 +99,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         },
       ];
     });
-    setIsCartOpen(true);
+
+    if (!['Desserts', 'Beverages'].includes(payload.pizza.category)) {
+      setIsUpsellOpen(true);
+    } else {
+      setIsCartOpen(true);
+    }
   };
 
   const removeFromCart = (cartItemId: string) => {
@@ -132,6 +140,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         setIsCartOpen,
         orderType,
         setOrderType,
+        isUpsellOpen,
+        setIsUpsellOpen,
       }}
     >
       {children}

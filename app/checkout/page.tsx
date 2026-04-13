@@ -10,7 +10,12 @@ export default function CheckoutPage() {
   const { cart, cartTotal, clearCart } = useCart();
   const router = useRouter();
   
-  const [formData, setFormData] = useState({ name: '', phone: '', address: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '+1 ',
+    address: ''
+  });
+  const [error, setError] = useState('');
   const [status, setStatus] = useState<'idle' | 'processing' | 'success'>('idle');
 
   const deliveryFee = 4.99;
@@ -18,6 +23,23 @@ export default function CheckoutPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
+    // Validation
+    const cleanPhone = formData.phone.replace('+1 ', '').trim();
+    if (!formData.name.trim()) {
+      setError('Please enter your name.');
+      return;
+    }
+    if (cleanPhone.length < 10) {
+      setError('Please enter a valid phone number.');
+      return;
+    }
+    if (!formData.address.trim()) {
+      setError('Please enter your delivery address.');
+      return;
+    }
+
     setStatus('processing');
     
     // Mock processing delay
@@ -73,6 +95,11 @@ export default function CheckoutPage() {
             <div>
               <h2 className="text-4xl font-extrabold mb-8 text-black">Checkout</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="bg-red-50 text-red-500 p-4 rounded-xl text-sm font-bold border border-red-100">
+                    {error}
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm font-bold text-black mb-2">Full Name</label>
                   <input 

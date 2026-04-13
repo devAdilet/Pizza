@@ -14,8 +14,11 @@ const CATEGORIES = [
 
 const menuData = menuDataRaw as Pizza[];
 
+// Filter categories so we only show buttons for categories that actually have items in menuData
+const ACTIVE_CATEGORIES = CATEGORIES.filter(cat => menuData.some(item => item.category === cat));
+
 export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState(CATEGORIES[0]);
+  const [activeCategory, setActiveCategory] = useState(ACTIVE_CATEGORIES[0]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isScollingRef = useRef(false);
 
@@ -41,7 +44,7 @@ export default function MenuPage() {
       if (isScollingRef.current) return;
       
       let currentActive = activeCategory;
-      for (const cat of CATEGORIES) {
+      for (const cat of ACTIVE_CATEGORIES) {
         const el = document.getElementById(`section-${cat}`);
         if (el) {
           const rect = el.getBoundingClientRect();
@@ -79,7 +82,7 @@ export default function MenuPage() {
               exit={{ opacity: 0, y: -10 }}
               className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-black/5 max-h-80 overflow-y-auto z-50 flex flex-col p-2"
             >
-              {CATEGORIES.map(category => (
+              {ACTIVE_CATEGORIES.map(category => (
                 <button
                   key={category}
                   onClick={() => scrollToCategory(category)}
@@ -99,7 +102,7 @@ export default function MenuPage() {
       <aside className="hidden md:block w-72 flex-shrink-0 relative">
         <nav className="sticky top-28 flex flex-col bg-white rounded-3xl shadow-sm border border-black/5 p-4 space-y-1">
           <h2 className="text-xs font-black tracking-widest text-[#424242]/50 uppercase mb-4 px-4 pt-2">Menu</h2>
-          {CATEGORIES.map((category) => {
+          {ACTIVE_CATEGORIES.map((category) => {
             const isActive = activeCategory === category;
             const isCyo = category === 'Create Your Own Pizza';
             return (
@@ -123,7 +126,7 @@ export default function MenuPage() {
 
       {/* Main Content Area */}
       <main className="flex-1 pb-32">
-        {CATEGORIES.map((category) => {
+        {ACTIVE_CATEGORIES.map((category) => {
           const items = menuData.filter(item => item.category === category);
           if (items.length === 0) return null;
           

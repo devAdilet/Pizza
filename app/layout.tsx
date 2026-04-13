@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from '@/components/Providers';
 import { Navbar } from '@/components/Navbar';
 import { CartSidebar } from '@/components/CartSidebar';
+import { UpsellModal } from '@/components/UpsellModal';
 import { Footer } from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -28,6 +29,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <CartSidebar />
+          <UpsellModal />
         </Providers>
       </body>
     </html>
