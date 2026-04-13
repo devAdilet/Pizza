@@ -1,50 +1,66 @@
 [
   {
     "id": "1",
-    "name": "Classic Margherita",
-    "description": "Tomato sauce, mozzarella, and fresh basil.",
-    "price": 12.00,
-    "category": "Veggie",
-    "imageUrl": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=80&w=800"
+    "name": "Garlic Parmesan Knots",
+    "description": "Freshly baked dough knots tossed in garlic butter and parmesan.",
+    "price": 5.99,
+    "category": "Appetizers",
+    "imageUrl": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&q=80&w=800"
   },
   {
     "id": "2",
-    "name": "Pepperoni Inferno",
-    "description": "Spicy pepperoni, jalapeños, and hot honey drizzle.",
-    "price": 15.00,
-    "category": "Spicy",
-    "imageUrl": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&q=80&w=800"
+    "name": "Mozzarella Sticks",
+    "description": "Crispy golden outside, gooey cheese inside. Served with marinara.",
+    "price": 6.99,
+    "category": "Appetizers",
+    "imageUrl": "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?auto=format&fit=crop&q=80&w=800"
   },
   {
     "id": "3",
-    "name": "Meat Lover's Feast",
-    "description": "Sausage, bacon, pepperoni, and ham.",
-    "price": 18.00,
-    "category": "Meat",
-    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800"
+    "name": "Classic Margherita",
+    "description": "Tomato sauce, mozzarella, and fresh basil.",
+    "price": 12.00,
+    "category": "Classic Pizza",
+    "imageUrl": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=80&w=800"
   },
   {
     "id": "4",
-    "name": "Mushroom Truffle",
-    "description": "Wild mushrooms, truffle oil, and ricotta cheese.",
-    "price": 16.00,
-    "category": "Veggie",
-    "imageUrl": "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?auto=format&fit=crop&q=80&w=800"
+    "name": "Meat Lover's Feast",
+    "description": "Sausage, bacon, pepperoni, and ham.",
+    "price": 18.00,
+    "category": "Classic Pizza",
+    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800"
   },
   {
     "id": "5",
-    "name": "Spicy BBQ Chicken",
-    "description": "Grilled chicken, red onions, spicy BBQ sauce.",
-    "price": 17.50,
-    "category": "Spicy",
-    "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800"
+    "name": "Pepperoni Inferno",
+    "description": "Spicy pepperoni, jalapeños, and hot honey drizzle.",
+    "price": 15.00,
+    "category": "Signature Pizza",
+    "imageUrl": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&q=80&w=800"
   },
   {
     "id": "6",
-    "name": "Prosciutto & Arugula",
-    "description": "Prosciutto, fresh arugula, parmesan shavings.",
-    "price": 19.00,
-    "category": "Meat",
-    "imageUrl": "https://images.unsplash.com/photo-1555072956-7758afb20e8f?auto=format&fit=crop&q=80&w=800"
+    "name": "Truffle Mushroom",
+    "description": "Wild mushrooms, truffle oil, and ricotta cheese.",
+    "price": 19.50,
+    "category": "Signature Pizza",
+    "imageUrl": "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "7",
+    "name": "Tiramisu",
+    "description": "Classic Italian dessert with espresso and mascarpone.",
+    "price": 6.99,
+    "category": "Desserts",
+    "imageUrl": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "8",
+    "name": "Craft Cola",
+    "description": "Artisan cola with natural cane sugar.",
+    "price": 2.99,
+    "category": "Drinks",
+    "imageUrl": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=800"
   }
 ]

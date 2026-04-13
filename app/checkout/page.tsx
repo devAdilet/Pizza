@@ -31,7 +31,7 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-3xl mx-auto px-4 py-20 text-center">
         <h2 className="text-3xl font-bold mb-4">Your cart is empty</h2>
-        <button onClick={() => router.push('/')} className="text-red-600 font-bold hover:underline">
+        <button onClick={() => router.push('/menu')} className="text-red-600 font-bold hover:underline">
           Return to Menu
         </button>
       </div>
@@ -41,7 +41,7 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <button 
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/menu')}
         className="flex items-center gap-2 font-bold mb-8 text-black/60 hover:text-black transition-colors"
       >
         <ChevronLeft className="w-5 h-5" /> Back to Menu
@@ -58,8 +58,8 @@ export default function CheckoutPage() {
             <CheckCircle2 className="w-24 h-24 mx-auto text-black mb-6" />
             <h1 className="text-5xl font-extrabold mb-4 text-black">Order Confirmed!</h1>
             <p className="text-xl text-black/60 mb-8 font-medium">Your pizza is on the way. We will contact you soon.</p>
-            <OrderButton onClick={() => router.push('/')} style={{ maxWidth: '300px', margin: '0 auto' }}>
-              Back to Home
+            <OrderButton onClick={() => router.push('/menu')} style={{ maxWidth: '300px', margin: '0 auto' }}>
+              Back to Menu
             </OrderButton>
           </motion.div>
         ) : (
