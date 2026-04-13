@@ -2,12 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface SegmentedControlProps {
+  name: string;
   options: string[];
   selected: string;
   onChange: (value: string) => void;
 }
 
-export function SegmentedControl({ options, selected, onChange }: SegmentedControlProps) {
+export function SegmentedControl({ name, options, selected, onChange }: SegmentedControlProps) {
   return (
     <div className="flex bg-[#F5F5F5] p-1.5 rounded-full border border-black/5 relative">
       {options.map(option => (
@@ -20,7 +21,7 @@ export function SegmentedControl({ options, selected, onChange }: SegmentedContr
         >
           {selected === option && (
             <motion.div
-              layoutId="seg-bg-global"
+              layoutId={`seg-bg-${name}`}
               className="absolute inset-0 bg-[#FF5722] rounded-full shadow-md shadow-[#FF5722]/20"
               initial={false}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}

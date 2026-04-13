@@ -122,6 +122,7 @@ export function CustomizationModal({ pizza, isOpen, onClose }: CustomizationModa
                   <div>
                     <h3 className="text-sm font-bold text-[#424242] uppercase tracking-wider mb-4">Size</h3>
                     <SegmentedControl 
+                      name="size-control"
                       options={pizza.availableSizes!.map(s => s.label)}
                       selected={selectedSize?.label || ''}
                       onChange={(val) => {
@@ -139,6 +140,7 @@ export function CustomizationModal({ pizza, isOpen, onClose }: CustomizationModa
                   <div>
                     <h3 className="text-sm font-bold text-[#424242] uppercase tracking-wider mb-4">Crust Style</h3>
                     <SegmentedControl 
+                      name="crust-control"
                       options={pizza.availableCrusts!.map(c => c.label)}
                       selected={selectedCrust?.label || ''}
                       onChange={(val) => {
@@ -226,6 +228,7 @@ export function CustomizationModal({ pizza, isOpen, onClose }: CustomizationModa
               <span className="text-sm font-bold uppercase tracking-widest text-[#424242]/70">Order Preference</span>
               <div className="w-full sm:w-64">
                 <SegmentedControl 
+                  name="order-type-control"
                   options={['Delivery', 'Takeout']} 
                   selected={orderType} 
                   onChange={(val) => setOrderType(val as OrderType)} 

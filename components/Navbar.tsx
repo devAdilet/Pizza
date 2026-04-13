@@ -12,14 +12,16 @@ export function Navbar() {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           
-          {/* Left: Contacts / Menu */}
+          {/* Left: Contacts */}
           <div className="flex-1 flex items-center justify-start">
-            <button className="md:hidden p-2 text-[#424242] hover:bg-black/5 rounded-full transition-colors">
-              <Menu className="w-6 h-6" />
-            </button>
-            <div className="hidden md:flex items-center gap-2 text-[#424242] cursor-pointer hover:text-black transition-colors font-bold text-sm tracking-wide">
-              <div className="bg-[#F5F5F5] p-2 rounded-full"><Phone className="w-4 h-4 text-[#FF5722]" /></div>
-              <span>Contacts</span>
+            <div 
+              className="flex items-center gap-2 text-[#424242] cursor-pointer hover:text-black transition-colors font-bold text-sm tracking-wide group"
+              onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
+            >
+              <div className="bg-[#F5F5F5] p-2 rounded-full group-hover:bg-[#FF5722]/10 transition-colors">
+                <Phone className="w-5 h-5 md:w-4 md:h-4 text-[#FF5722]" />
+              </div>
+              <span className="hidden md:inline">Contacts</span>
             </div>
           </div>
 
