@@ -12,15 +12,22 @@ const CATEGORIES = [
   'Desserts', 'Beverages'
 ];
 
-const menuData = menuDataRaw as Pizza[];
-
-// Filter categories so we only show buttons for categories that actually have items in menuData
-const ACTIVE_CATEGORIES = CATEGORIES.filter(cat => menuData.some(item => item.category === cat));
+const menuDataRawArray = menuDataRaw as Pizza[];
 
 export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState(ACTIVE_CATEGORIES[0]);
+  const [menuData, setMenuData] = useState<Pizza[]>(menuDataRawArray);
+  const activeCategories = CATEGORIES.filter(cat => menuData.some(item => item.category === cat));
+  const [activeCategory, setActiveCategory] = useState(activeCategories[0] || CATEGORIES[0]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isScollingRef = useRef(false);
+
+  useEffect(() => {
+    const local = localStorage.getItem('menu_db_v1');
+    if (local && local !== '[]') {
+      const parsed = JSON.parse(local);
+      setMenuData(parsed);
+    }
+  }, []);
 
   const scrollToCategory = (category: string) => {
     setActiveCategory(category);
@@ -44,7 +51,7 @@ export default function MenuPage() {
       if (isScollingRef.current) return;
       
       let currentActive = activeCategory;
-      for (const cat of ACTIVE_CATEGORIES) {
+      for (const cat of activeCategories) {
         const el = document.getElementById(`section-${cat}`);
         if (el) {
           const rect = el.getBoundingClientRect();
@@ -82,7 +89,7 @@ export default function MenuPage() {
               exit={{ opacity: 0, y: -10 }}
               className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-black/5 max-h-80 overflow-y-auto z-50 flex flex-col p-2"
             >
-              {ACTIVE_CATEGORIES.map(category => (
+              {activeCategories.map(category => (
                 <button
                   key={category}
                   onClick={() => scrollToCategory(category)}
@@ -102,7 +109,7 @@ export default function MenuPage() {
       <aside className="hidden md:block w-72 flex-shrink-0 relative">
         <nav className="sticky top-28 flex flex-col bg-white rounded-3xl shadow-sm border border-black/5 p-4 space-y-1">
           <h2 className="text-xs font-black tracking-widest text-[#424242]/50 uppercase mb-4 px-4 pt-2">Menu</h2>
-          {ACTIVE_CATEGORIES.map((category) => {
+          {activeCategories.map((category) => {
             const isActive = activeCategory === category;
             const isCyo = category === 'Create Your Own Pizza';
             return (
@@ -126,7 +133,7 @@ export default function MenuPage() {
 
       {/* Main Content Area */}
       <main className="flex-1 pb-32">
-        {ACTIVE_CATEGORIES.map((category) => {
+        {activeCategories.map((category) => {
           const items = menuData.filter(item => item.category === category);
           if (items.length === 0) return null;
           

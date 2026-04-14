@@ -3,9 +3,13 @@ import React from 'react';
 import { ShoppingCart, Menu, Phone } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function Navbar() {
   const { cartCount, setIsCartOpen } = useCart();
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) return null;
 
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-black/5">

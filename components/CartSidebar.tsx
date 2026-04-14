@@ -4,11 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import { OrderButton } from './OrderButton';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export function CartSidebar() {
   const { isCartOpen, setIsCartOpen, cart, updateQuantity, removeFromCart, cartTotal } = useCart();
   const router = useRouter();
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) return null;
 
   const handleCheckout = () => {
     setIsCartOpen(false);

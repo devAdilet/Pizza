@@ -75,5 +75,45 @@
     "basePrice": 3.00,
     "category": "Beverages",
     "imageUrl": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&q=80"
+  },
+  {
+    "id": "pas-1",
+    "name": "Fettuccine Alfredo",
+    "description": "Creamy parmesan cheese sauce served over fettuccine pasta.",
+    "basePrice": 14.00,
+    "category": "Pastas",
+    "imageUrl": "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=800&q=80"
+  },
+  {
+    "id": "cal-1",
+    "name": "Meatball Calzone",
+    "description": "Stuffed with meatballs, marinara, and lots of cheese.",
+    "basePrice": 15.00,
+    "category": "Calzones",
+    "imageUrl": "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&q=80"
+  },
+  {
+    "id": "sub-1",
+    "name": "Italian Deli Sub",
+    "description": "Salami, pepperoni, ham, provolone, toasted hot.",
+    "basePrice": 11.00,
+    "category": "Hot Subs",
+    "imageUrl": "https://images.unsplash.com/photo-1627054234033-02f82ba1f1b2?w=800&q=80"
+  },
+  {
+    "id": "flat-1",
+    "name": "Margherita Flatbread",
+    "description": "Thin crispy crust topped with fresh mozzarella and basil.",
+    "basePrice": 9.00,
+    "category": "Flat Breads",
+    "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80"
+  },
+  {
+    "id": "spec-1",
+    "name": "Truffle Mushroom",
+    "description": "Wild mushrooms, truffle oil, white sauce.",
+    "basePrice": 20.00,
+    "category": "Specialty Pizzas",
+    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80"
   }
 ]

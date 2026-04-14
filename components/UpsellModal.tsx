@@ -6,6 +6,7 @@ import { useCart } from '@/hooks/useCart';
 import { OrderButton } from './OrderButton';
 import menuDataRaw from '@/data/menu.json';
 import { Pizza } from '@/types';
+import { usePathname } from 'next/navigation';
 
 const menuData = menuDataRaw as Pizza[];
 
@@ -14,6 +15,9 @@ const DESSERT_UPSELL = menuData.find(item => item.id === 'des-1')!;
 
 export function UpsellModal() {
   const { isUpsellOpen, setIsUpsellOpen, addToCart, setIsCartOpen } = useCart();
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) return null;
 
   if (!DESSERT_UPSELL) return null; // Sanity check if data changes
 
