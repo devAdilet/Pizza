@@ -4,7 +4,7 @@ import { useCart } from '@/hooks/useCart';
 import { OrderButton } from '@/components/OrderButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { CheckCircle2, ChevronLeft } from 'lucide-react';
+import { CheckCircle2, ChevronLeft, CreditCard, Loader2 } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart } = useCart();
@@ -15,13 +15,18 @@ export default function CheckoutPage() {
     phone: '+1 ',
     address: ''
   });
+  const [paymentData, setPaymentData] = useState({
+    cardNumber: '',
+    cardExp: '',
+    cardCvv: ''
+  });
   const [error, setError] = useState('');
   const [status, setStatus] = useState<'idle' | 'processing' | 'success'>('idle');
 
   const deliveryFee = 4.99;
   const total = cartTotal + (cartTotal > 0 ? deliveryFee : 0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -40,13 +45,35 @@ export default function CheckoutPage() {
       return;
     }
 
+    if (!paymentData.cardNumber || !paymentData.cardExp || !paymentData.cardCvv) {
+      setError('Please fill out the Payment Details completely.');
+      return;
+    }
+
     setStatus('processing');
     
-    // Mock processing delay
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer: { name: formData.name, phone: formData.phone, address: formData.address },
+          cart: cart,
+          total: total,
+          paymentToken: `mock-tok-${paymentData.cardNumber.slice(-4) || '1234'}`
+        })
+      });
+
+      if (!res.ok) {
+         throw new Error("Payment declined or server error.");
+      }
+      
       setStatus('success');
       clearCart();
-    }, 2000);
+    } catch (err: any) {
+      setError(err.message || 'Checkout failed.');
+      setStatus('idle');
+    }
   };
 
   if (cart.length === 0 && status === 'idle') {
@@ -133,6 +160,57 @@ export default function CheckoutPage() {
                     placeholder="123 Pizza Street, Apt 4B"
                   />
                 </div>
+                
+                {/* Secure Payment Block */}
+                <div className="pt-8 mt-8 border-t border-black/10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="bg-white p-3 rounded-xl border border-black/10 shadow-sm">
+                      <CreditCard className="w-6 h-6 text-[#FF5722]" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-black">Payment Details</h3>
+                      <p className="text-sm font-medium text-black/50 mt-1">Clover Secure E-Commerce Checkout / Apple Pay</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-bold text-black mb-2">Card Number</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={paymentData.cardNumber}
+                        onChange={(e) => setPaymentData({...paymentData, cardNumber: e.target.value})}
+                        className="w-full bg-black/5 border border-black/10 rounded-xl px-4 py-3 font-medium focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                        placeholder="0000 0000 0000 0000"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-bold text-black mb-2">Expiry</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={paymentData.cardExp}
+                          onChange={(e) => setPaymentData({...paymentData, cardExp: e.target.value})}
+                          className="w-full bg-black/5 border border-black/10 rounded-xl px-4 py-3 font-medium focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                          placeholder="MM/YY"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-bold text-black mb-2">CVC</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={paymentData.cardCvv}
+                          onChange={(e) => setPaymentData({...paymentData, cardCvv: e.target.value})}
+                          className="w-full bg-black/5 border border-black/10 rounded-xl px-4 py-3 font-medium focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                          placeholder="123"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </form>
             </div>
 
@@ -178,7 +256,13 @@ export default function CheckoutPage() {
                 onClick={handleSubmit} 
                 disabled={status === 'processing' || cart.length === 0}
               >
-                {status === 'processing' ? 'Processing...' : `Pay $${total.toFixed(2)}`}
+                {status === 'processing' ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" /> Processing Payment...
+                  </span>
+                ) : (
+                  `Pay $${total.toFixed(2)}`
+                )}
               </OrderButton>
             </div>
           </motion.div>

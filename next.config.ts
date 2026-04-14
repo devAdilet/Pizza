@@ -5,7 +5,7 @@ const isGithubActions = process.env.GITHUB_ACTIONS || false;
 let repo = "Pizza";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // output: "export", // Disabled to allow Vercel API routes
   basePath: isGithubActions ? `/${repo}` : "",
   images: {
     unoptimized: true,
