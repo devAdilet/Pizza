@@ -4,11 +4,13 @@ import { useAdminData } from '@/hooks/useAdminData';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
 import { ProductModal } from '@/components/admin/ProductModal';
 import { Pizza } from '@/types';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AdminDashboard() {
   const { items, isLoading, saveItem, deleteItem } = useAdminData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Pizza | undefined>(undefined);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   const openNew = () => {
     setEditingItem(undefined);
@@ -20,9 +22,14 @@ export default function AdminDashboard() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm("Are you sure you want to delete this specific item?")) {
-      deleteItem(id);
+  const handleDeleteClick = (id: string) => {
+    setItemToDelete(id);
+  };
+
+  const confirmDelete = () => {
+    if (itemToDelete) {
+      deleteItem(itemToDelete);
+      setItemToDelete(null);
     }
   };
 
@@ -72,7 +79,7 @@ export default function AdminDashboard() {
                     <button onClick={() => openEdit(item)} className="p-2 text-[#424242]/50 hover:bg-black/5 hover:text-black rounded-lg transition-colors">
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button onClick={() => handleDelete(item.id)} className="p-2 text-[#424242]/50 hover:bg-red-50 hover:text-red-500 rounded-lg transition-colors">
+                    <button onClick={() => handleDeleteClick(item.id)} className="p-2 text-[#424242]/50 hover:bg-red-50 hover:text-red-500 rounded-lg transition-colors">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -89,6 +96,41 @@ export default function AdminDashboard() {
         onSave={saveItem}
         initialData={editingItem}
       />
+
+      <AnimatePresence>
+        {itemToDelete && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} 
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm" 
+              onClick={() => setItemToDelete(null)} 
+            />
+            <motion.div 
+              initial={{scale: 0.95, opacity: 0}} animate={{scale: 1, opacity: 1}} exit={{scale: 0.95, opacity: 0}} 
+              className="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl relative w-full max-w-sm text-center border border-black/5"
+            >
+              <h3 className="text-2xl font-black text-black mb-4">Delete Item?</h3>
+              <p className="text-[#424242]/70 font-medium mb-8 leading-relaxed">
+                Are you sure you want to delete this specific item? This action cannot be undone.
+              </p>
+              <div className="flex gap-4">
+                <button 
+                  onClick={() => setItemToDelete(null)} 
+                  className="flex-1 py-4 px-4 font-bold text-[#424242] hover:bg-black/5 rounded-2xl transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={confirmDelete} 
+                  className="flex-1 py-4 px-4 font-bold text-white bg-red-500 hover:bg-red-600 rounded-2xl transition-colors shadow-lg shadow-red-500/20"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

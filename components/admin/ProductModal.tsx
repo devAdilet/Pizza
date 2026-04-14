@@ -18,14 +18,14 @@ const CATEGORIES = [
 ];
 
 export function ProductModal({ isOpen, onClose, onSave, initialData }: ProductModalProps) {
-  const [formData, setFormData] = useState<Partial<Pizza>>({});
+  const [formData, setFormData] = useState<Partial<Pizza> & { basePriceRaw?: string | number }>({});
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({ ...initialData, basePriceRaw: initialData.basePrice });
     } else {
       setFormData({
-        name: '', description: '', category: CATEGORIES[0], basePrice: 0,
+        name: '', description: '', category: CATEGORIES[0], basePrice: 0, basePriceRaw: '',
         imageUrl: '', kcal: 500, rating: 4.5, prepTime: '15-20 min'
       });
     }
@@ -38,7 +38,7 @@ export function ProductModal({ isOpen, onClose, onSave, initialData }: ProductMo
     const itemToSave = {
       ...formData,
       id: formData.id || `item-${Date.now()}`,
-      basePrice: Number(formData.basePrice) || 0,
+      basePrice: Number(formData.basePriceRaw) || 0,
       kcal: Number(formData.kcal) || 0,
       rating: Number(formData.rating) || 0,
     } as Pizza;
@@ -129,8 +129,8 @@ export function ProductModal({ isOpen, onClose, onSave, initialData }: ProductMo
                 <label className="text-xs font-bold uppercase tracking-wider text-[#FF5722]">Base Price ($)</label>
                 <input 
                   type="number" step="0.01" required
-                  value={formData.basePrice || 0} 
-                  onChange={e => setFormData({...formData, basePrice: Number(e.target.value)})}
+                  value={formData.basePriceRaw ?? ''} 
+                  onChange={e => setFormData({...formData, basePriceRaw: e.target.value === '' ? '' : Number(e.target.value)})}
                   className="w-full bg-[#FF5722]/10 text-[#FF5722] font-mono font-black border border-transparent focus:border-[#FF5722] focus:outline-none p-3 rounded-xl" 
                 />
               </div>
