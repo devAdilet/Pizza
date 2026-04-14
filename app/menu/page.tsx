@@ -5,6 +5,8 @@ import { Pizza } from '@/types';
 import { PizzaCard } from '@/components/PizzaCard';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { db } from '@/lib/firebase';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 
 const CATEGORIES = [
   'Appetizers', 'Salads', 'Low Carb', 'Pastas', 'Calzones', 'Hot Subs', 'Flat Breads', 
@@ -22,11 +24,15 @@ export default function MenuPage() {
   const isScollingRef = useRef(false);
 
   useEffect(() => {
-    const local = localStorage.getItem('menu_db_v1');
-    if (local && local !== '[]') {
-      const parsed = JSON.parse(local);
-      setMenuData(parsed);
-    }
+    // Initial load from raw data for instant paint
+    const q = collection(db, 'menuItems');
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => doc.data() as Pizza);
+      if (data.length > 0) {
+        setMenuData(data);
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   const scrollToCategory = (category: string) => {

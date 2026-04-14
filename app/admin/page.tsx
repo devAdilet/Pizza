@@ -7,7 +7,7 @@ import { Pizza } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AdminDashboard() {
-  const { items, isLoading, saveItem, deleteItem } = useAdminData();
+  const { items, isLoading, saveItem, deleteItem, seedDatabase } = useAdminData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Pizza | undefined>(undefined);
   const [itemToDelete, setItemToDelete] = useState<string | null>(null);
@@ -42,12 +42,22 @@ export default function AdminDashboard() {
           <h2 className="text-3xl font-black text-black tracking-tight">Menu Items</h2>
           <p className="text-[#424242]/70 font-medium">Manage your pizzas, pastas, and more in real-time.</p>
         </div>
-        <button 
-          onClick={openNew}
-          className="flex items-center gap-2 bg-[#FF5722] text-white px-5 py-3 rounded-2xl font-bold hover:bg-[#E64A19] transition-colors shadow-md shadow-[#FF5722]/20 shrink-0"
-        >
-          <Plus className="w-5 h-5" /> New Item
-        </button>
+        <div className="flex gap-3 shrink-0">
+          {items.length === 0 && !isLoading && (
+            <button 
+              onClick={seedDatabase}
+              className="flex items-center gap-2 bg-[#424242] text-white px-5 py-3 rounded-2xl font-bold hover:bg-black transition-colors shadow-md"
+            >
+              Seed DB
+            </button>
+          )}
+          <button 
+            onClick={openNew}
+            className="flex items-center gap-2 bg-[#FF5722] text-white px-5 py-3 rounded-2xl font-bold hover:bg-[#E64A19] transition-colors shadow-md shadow-[#FF5722]/20"
+          >
+            <Plus className="w-5 h-5" /> New Item
+          </button>
+        </div>
       </div>
 
       <div className="bg-white rounded-3xl shadow-sm border border-black/5 overflow-hidden overflow-x-auto">

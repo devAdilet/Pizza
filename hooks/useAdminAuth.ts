@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 export function useAdminAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -9,31 +11,33 @@ export function useAdminAuth() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const authStatus = localStorage.getItem('admin_auth_v1');
-    if (authStatus === 'true') {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-      if (pathname && !pathname.includes('/login')) {
-         router.push('/admin/login');
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+        if (pathname && !pathname.includes('/login')) {
+           router.push('/admin/login');
+        }
       }
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
   }, [pathname, router]);
 
-  const login = (email: string, pass: string) => {
-    if (email === 'admin@magnolia.com' && pass === 'magnolia123!') {
-      localStorage.setItem('admin_auth_v1', 'true');
-      setIsAuthenticated(true);
+  const login = async (email: string, pass: string) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
       router.push('/admin');
       return true;
+    } catch (error) {
+      console.error("Firebase Login Error:", error);
+      return false;
     }
-    return false;
   };
 
-  const logout = () => {
-    localStorage.removeItem('admin_auth_v1');
-    setIsAuthenticated(false);
+  const logout = async () => {
+    await signOut(auth);
     router.push('/admin/login');
   };
 
